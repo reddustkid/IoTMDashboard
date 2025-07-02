@@ -1,0 +1,79 @@
+{% extends "back/base.html" %}
+
+{% load static %}
+{% load custom_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'Данные' %}{% endblock %}
+
+{% block website_name %}{% trans 'Данные' %}
+    <a class="btn btn-primary" href='{% url "export" "data" %}?format=json' role="button">{% trans 'Json Экспорт' %}</a>
+    <a class="btn btn-success" href='{% url "export" "data" %}?format=xml' role="button">{% trans 'Xml Экспорт' %}</a>
+{% endblock %}
+
+{% block content %}
+
+{% if msg_ok %}
+    <div class="alert alert-info" role="alert">
+        <strong>{{ msg_ok }}</strong>
+    </div>
+{% endif %}
+
+{% if msg_err %}
+    <div class="alert alert-warning" role="alert">
+        <strong>{{ msg_err }}</strong>
+    </div>
+{% endif %}
+
+<div class="col-xs-12 col-sm-12 placeholder">
+    <div class="table-responsive">
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>{% trans 'Id' %}</th>
+                <th>{% trans 'Устройство' %}</th>
+                <th>{% trans 'Ip Адрес' %}</th>
+                <th>{% trans 'Поле 1' %}</th>
+                <th>{% trans 'Поле 2' %}</th>
+                <th>{% trans 'Поле 3' %}</th>
+                <th>{% trans 'Поле 4' %}</th>
+                <th>{% trans 'Поле 5' %}</th>
+                <th>{% trans 'Поле 6' %}</th>
+                <th>{% trans 'Поле 7' %}</th>
+                <th>{% trans 'Поле 8' %}</th>
+                <th>{% trans 'Поле 9' %}</th>
+                <th>{% trans 'Поле 10' %}</th>
+                <th>{% trans 'Дата создания' %}</th>
+                <th>{% trans 'GET ID' %}</th>
+                <th>{% trans 'GET Last' %}</th>
+                <!-- <th>{% trans 'График' %}</th> -->
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in datas %}
+            <tr>
+                <td>#{{ i.id }}</td>
+                <td>{{ i.device.name }}</td>
+                <td><a class="tooltip-viewport-bottom" title="{{ i.remote_address }}">{{ i.remote_address | truncatechars:15 }}</a></td>
+                <td>{% if i.field_1 %}{{ i.device.field_1 }} / {{ i.field_1 }}{% endif %}</td>
+                <td>{% if i.field_2 %}{{ i.device.field_2 }} / {{ i.field_2 }}{% endif %}</td>
+                <td>{% if i.field_3 %}{{ i.device.field_3 }} / {{ i.field_3 }}{% endif %}</td>
+                <td>{% if i.field_4 %}{{ i.device.field_4 }} / {{ i.field_4 }}{% endif %}</td>
+                <td>{% if i.field_5 %}{{ i.device.field_5 }} / {{ i.field_5 }}{% endif %}</td>
+                <td>{% if i.field_6 %}{{ i.device.field_6 }} / {{ i.field_6 }}{% endif %}</td>
+                <td>{% if i.field_7 %}{{ i.device.field_7 }} / {{ i.field_7 }}{% endif %}</td>
+                <td>{% if i.field_8 %}{{ i.device.field_8 }} / {{ i.field_8 }}{% endif %}</td>
+                <td>{% if i.field_9 %}{{ i.device.field_9 }} / {{ i.field_9 }}{% endif %}</td>
+                <td>{% if i.field_10 %}{{ i.device.field_10 }} / {{ i.field_10 }}{% endif %}</td>
+                <td>{{ i.pub_date }}</td>
+                <td><a class="btn btn-dark" href="/api/datas/{{ i.pk }}/" role="button">{% trans 'GET ID' %}</a></td>
+                <td><a class="btn btn-success" href="/api/datas/?last=True" role="button">{% trans 'GET Last' %}</a></td>
+                <!-- <td><a class="btn btn-info" href="{% url 'data_chart' i.device.pk %}" role="button">{% trans 'View' %}</a></td> -->
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

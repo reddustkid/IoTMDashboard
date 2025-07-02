@@ -1,0 +1,49 @@
+{% load custom_tags %}
+{% load i18n %}
+{% load rest_framework %}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'index' %}">{% website_name %}</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans 'Меню' %} <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                        <li><a href="{% url 'index' %}">{% trans 'Главная' %}</a></li>
+                        <li><a href="{% url 'device_add' %}">{% trans 'Добавление устройства' %}</a></li>
+                        <li><a href="{% url 'device_list' %}">{% trans 'Список устройств' %}</a></li>
+                        <li><a href="{% url 'datas' %}">{% trans 'Данные' %}</a></li>
+                        <li><a href="{% url 'key_list' %}">{% trans 'Список ключей' %}</a></li>
+                        <li role="separator" class="divider"></li>
+                        <!-- <li><a href="/api">{% trans 'API' %}</a></li>
+                        <li><a href="{% url 'api_data' %}">{% trans 'API Data' %}</a></li> -->
+                  </ul>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                            <li><a href="/api-auth/logout/">{% trans 'Выйти' %}</a></li>
+                      </ul>
+                    </li>
+                {% else %}
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                            <li><a href="/api/">{% trans 'Зайти' %}</a></li>
+                      </ul>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
